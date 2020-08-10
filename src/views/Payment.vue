@@ -3,7 +3,7 @@
    <Navbar/>
    <Sidebar/>
    <div class="text-center">
-     <h5>HOME PAGE</h5>
+     <h5>PAYMENT PAGE</h5>
    </div>
   </div>
 </template>
@@ -12,6 +12,7 @@
 // @ is an alias to /src
 import Navbar from '@/components/Navbar.vue'
 import Sidebar from '../components/Sidebar'
+
 export default {
   name: 'Home',
   components: {
@@ -20,7 +21,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
     .text-center {
         margin-top: 10rem;
