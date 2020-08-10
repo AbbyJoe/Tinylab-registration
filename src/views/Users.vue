@@ -97,7 +97,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="table-responsive">
-                  <table class="table">
+                  <table class="table table-borderless">
                     <thead>
                       <tr class="table__header">
                         <th scope="col"><input type="radio" name="muhRadio" disabled /></th>
