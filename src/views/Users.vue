@@ -254,7 +254,7 @@ export default {
 
 <style scoped>
   .content__container {
-    background: #E5E5E5 !important;
+    background: #f6f8f8 !important;
     padding-top: 130px;
     padding-bottom: 140px ;
     padding-left: 120px;
