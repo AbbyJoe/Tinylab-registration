@@ -16,7 +16,7 @@
               </router-link>
             </li>
             <li>
-              <router-link to="/payment" class="link">
+              <router-link to="/Payment" class="link">
                 <div class="stroke"></div>
                 <credit-card-icon size="1.5x" class="custom-class"></credit-card-icon>
               </router-link>
