@@ -19,7 +19,7 @@ Vue.use(VueRouter)
     component: Users
   },
   {
-    path: '/Hoem',
+    path: '/Home',
     name: 'Home',
     component: Home
   },
