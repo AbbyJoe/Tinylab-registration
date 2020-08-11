@@ -56,7 +56,12 @@
                     </form>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"  @click="addNew">Add New</button>
+                    <button type="button" class="btn btn-primary"  @click="addNew">
+                      <div v-if="loading">
+                          <div id="loading"></div>
+                      </div>
+                      <div v-else>Add New</div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -185,7 +190,8 @@ export default {
       }],
       selectedIndex: '',
       selectedId: '',
-      roleId: ''
+      roleId: '',
+      loading: false
     }),
     mounted () {
       if (localStorage.getItem('tableJSON')) {
@@ -198,6 +204,7 @@ export default {
     },
     methods: {
       addNew() {
+        this.loading = true
         axios.post('employee', {
           firstname: this.firstname,
           lastname: this.lastname,
@@ -205,6 +212,7 @@ export default {
           email:this.email,
           role: this.role
         }).then((response) => {
+          this.loading = false
           this.firstname = '',
           this.lastname = '',
           this.email = '',
@@ -322,6 +330,24 @@ export default {
     color: #013C61;
   }
 
+  /* spinner */
+    #loading {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+  @-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
 
 /* Header__Section */
 .header {
@@ -500,7 +526,7 @@ input[type=radio]:focus {
 /* MEDIA QUERIES */
 @media only screen and (max-width: 768px) {
   .content__container {
-    padding-left: 50px;
+    padding-left: 45px;
     padding-right: 0px;
     margin-top: 0px;
   }
@@ -530,6 +556,9 @@ input[type=radio]:focus {
   }
   .search__icon {
     margin-top: 15px;
+  }
+  .table__section {
+    margin-top: 0px;
   }
 }
 </style>
