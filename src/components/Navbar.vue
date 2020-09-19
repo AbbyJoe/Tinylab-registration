@@ -1,46 +1,40 @@
 <template>
   <div> 
-      <div class="fixed-top">
-        <div class="container-fluid nav-items">
-          <img src="../assets/images/Bitmap.svg" class="img-fluid" alt="brand-logo">
-          <div class="profile pr-5 d-flex align-items-center justify-content-strech">
-            <img src="../assets/images/Rectangle.png" class="img-fluid" alt="profile"/>
-            <p class="ml-2 mt-3"> Hi, Joshua <span><img src="../assets/images/Icon.jpg" class="ml-2" alt=""></span></p>
-          </div>
-        </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <router-link to="/" class="navbar-brand">Newslify</router-link>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <router-link to="/" class="nav-link">Home <span class="sr-only">(current)</span></router-link>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+           <li class="nav-item">
+            <router-link to="" class="nav-link">Logged In</router-link>
+          </li>
+        </ul>
       </div>
+    </nav>
   </div>
 </template>
 
 <script>
 export default {
+  methods: {
+    logOut() {
+      localStorage.removeItem('token');
+    }
+  }
 
 }
 </script>
 
 <style scoped>
-    .container-fluid {
-        background: #FFFFFF;
-        border: 1px solid rgba(106, 126, 138, 0.1);
-        box-sizing: border-box;
-    }
-    .nav-items {
-        display: flex;
-        justify-content: space-between;
-        padding: 5px;
-    }
-    .profile p {
+  .nav-link, .navbar-brand {
       font-family: 'Roboto', sans-serif;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 25px;
-      letter-spacing: -0.251429px;
-      color: #013C61;
-    }
-    @media only screen and (max-width: 768px) {
-      .profile {
-        padding-right: 10px !important;
-      }
-    }
+  }
 </style>

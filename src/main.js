@@ -6,9 +6,12 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'jquery/src/jquery.js'
 import 'bootstrap/dist/js/bootstrap.min.js'
-import axios from 'axios'
+import ScrollLoader from 'vue-scroll-loader'
+import infiniteScroll from 'vue-infinite-scroll'
 
-axios.defaults.baseURL = 'https://crudcrud.com/api/799d2f839b104207bbd012ba7be4df75'
+Vue.use(infiniteScroll)
+
+Vue.use(ScrollLoader)
 
 Vue.config.productionTip = false
 
