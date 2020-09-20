@@ -21,7 +21,7 @@
             </div>
           </div>
         </div>
-        <scroll-loader :loader-method="getImagesInfo" :loader-enable="loadMore">
+        <scroll-loader :loader-method="getTopNews" :loader-enable="loadMore">
         </scroll-loader>
      </div>
   </div>
@@ -53,7 +53,7 @@ export default {
         this.$router.push('/Login')
     } else {
       this.getTopNews()
-      this.getImagesInfo()
+      this.getTopNews()
     }
   },
   methods: {
