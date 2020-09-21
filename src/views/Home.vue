@@ -21,8 +21,12 @@
             </div>
           </div>
         </div>
-        <scroll-loader :loader-method="getTopNews" :loader-enable="loadMore">
-        </scroll-loader>
+        <div ref="infinteScrollTrigger">
+          <div v-if="loading" class="text-center mt-5">
+                <div id="loading"></div>
+            </div> 
+            <div v-else class="text-center">No more top news for now...</div>
+        </div>
      </div>
   </div>
 </template>
@@ -39,23 +43,19 @@ export default {
     search: '',
     country: 'us',
     loading: false,
-    loadMore: true,
     currentPage: 1,
-    maxPerPage: 21,
-    totalResults: 0
+    maxPerPage: 6,
+    totalResults: 100
   }),
   components: {
     Navbar,
   },
-  mounted() {
-    if(localStorage.getItem('token') === null) {
-        localStorage.removeItem('token');
-        this.$router.push('/Login')
-    } else {
-      this.getTopNews()
-      this.getTopNews()
+ 
+  computed: {
+    pageCount() {
+      return Math.ceil(this.totalResults/this.maxPerPage)
     }
-  },
+  }, 
   methods: {
     moment: function () {
       return moment();
@@ -65,18 +65,11 @@ export default {
     },
     getTopNews() {
       this.loading = true
-      const api_key = 'ee2383b8f68a464a96757a4af730ee62';
-      axios.get(`http://newsapi.org/v2/top-headlines?country=${this.country}&pageSize=${this.maxPerPage}&apiKey=${api_key}`, {
-         params: {
-              currentPage: this.currentPage++,
-              maxPerPage: this.maxPerPage,
-              // totalResults: this.totalResults
-            }
-      })
+      const api_key = '886f03f701624f8a983ec136ff054946';
+      axios.get(`http://newsapi.org/v2/top-headlines?country=${this.country}&pageSize=${this.maxPerPage}&apiKey=${api_key}&page=${this.currentPage}`)
       .then(response => {
         this.loading = false
-        this.articles = response.data.articles;
-        response.data.articles.length < this.maxPerPage && (this.loadMore = false)
+        this.articles.push(...response.data.articles)
       }).catch(error => {
         console.log(error)
       })
@@ -84,20 +77,41 @@ export default {
      searchNews() {
        if(this.search !== '') {
          this.loading = true
-         const api_key = 'ee2383b8f68a464a96757a4af730ee62';
-         const current_date = moment().format();
-         axios.get(`http://newsapi.org/v2/everything?q=${this.search}&from=${current_date}&sortBy=publishedAt&apiKey=${api_key}`)
+         const api_key = '886f03f701624f8a983ec136ff054946';
+        //  const current_date = moment().format();
+         axios.get(`https://newsapi.org/v2/everything?q=${this.search}&apiKey=${api_key}&page=${this.currentPage}`)
          .then(response => {
-           this.loading = false
-           this.search = ''
-           this.articles = response.data.articles;
-         }).catch(error => {
+            this.loading = false
+            this.search = ''
+            this.articles.push(...response.data.articles)
+         }).catch(error => {  
            alert(error)
          }) 
         this.resetData();
        } else {
         this.getTopNews()
        }
+    },
+    scrollTrigger() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.intersectionRatio  > 0 && this.currentPage < this.pageCount) {
+            this.loading = true;
+            this.currentPage += 1;
+            this.getTopNews();
+          }
+        });
+      });
+       observer.observe(this.$refs.infinteScrollTrigger)
+    }
+  },
+   mounted() {
+    if(localStorage.getItem('token') === null) {
+        localStorage.removeItem('token');
+        this.$router.push('/Login')
+    } else {
+      this.getTopNews();
+      this.scrollTrigger()
     }
   },
   filters: {
@@ -135,5 +149,23 @@ export default {
   }
   .card__body {
      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);  
+  }
+
+  /* spinner */
+    #loading {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #007bff;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+  @keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+  @-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
   }
 </style>

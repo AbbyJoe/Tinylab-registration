@@ -14,7 +14,7 @@
         </ul>
         <ul class="navbar-nav ml-auto">
            <li class="nav-item">
-            <router-link to="" class="nav-link">Logged In</router-link>
+            <button type="button"  @click="logOut" class="btn">Logout</button>
           </li>
         </ul>
       </div>
@@ -27,6 +27,7 @@ export default {
   methods: {
     logOut() {
       localStorage.removeItem('token');
+      this.$router.push('/Login')
     }
   }
 

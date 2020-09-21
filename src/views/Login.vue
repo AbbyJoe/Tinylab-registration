@@ -9,15 +9,17 @@
           <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
           <form>
             <!-- to error: add class "has-danger" -->
+             <div v-if="error" class="bg-danger p-2">{{error}}</div>
             <div class="form-group">
               <label for="exampleInputUsername1">Email</label>
               <input type="email" class="form-control form-control-sm" v-model="email">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
+             
               <input type="password" class="form-control form-control-sm" v-model="password">
             </div>
-            <button type="submit" class="btn btn-primary btn-block" @click.prevent="login">
+            <button type="submit" :disabled="loading === true" class="btn btn-primary btn-block" @click.prevent="login">
                 <div v-if="loading">
                     <div id="loading"></div>
                 </div>  
@@ -46,7 +48,8 @@ export default {
   data:() => ({
     email: '',
     password:'',
-    loading: false
+    loading: false,
+    error: ''
   }),
   methods: {
     login() {
@@ -58,6 +61,12 @@ export default {
         this.loading = false,
         localStorage.setItem('token', response.data.idToken),
         this.$router.push('/')
+      }).catch(error => {
+          this.loading = false;
+          this.error = error.response.data.error.message
+          setTimeout(() => {
+            this.error = ''
+          }, 3000)
       })
     }
   }
