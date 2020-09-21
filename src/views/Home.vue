@@ -98,7 +98,11 @@ export default {
           if(entry.intersectionRatio  > 0 && this.currentPage < this.pageCount) {
             this.loading = true;
             this.currentPage += 1;
-            this.getTopNews();
+            if(this.search){
+              this.searchNews()
+            } else {
+              this.getTopNews();
+            }
           }
         });
       });
