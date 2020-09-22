@@ -5,11 +5,8 @@
       <div class="card-body">
         <h3 class="card-title text-center">Login to Newslify</h3>
         <div class="card-text">
-          <!--
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
-          <form>
-            <!-- to error: add class "has-danger" -->
              <div v-if="error" class="bg-danger p-2">{{error}}</div>
+          <form>
             <div class="form-group">
               <label for="exampleInputUsername1">Email</label>
               <input type="email" class="form-control form-control-sm" v-model="email">

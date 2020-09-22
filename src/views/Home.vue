@@ -88,8 +88,6 @@ export default {
            alert(error)
          }) 
         this.resetData();
-       } else {
-        this.getTopNews()
        }
     },
     scrollTrigger() {
