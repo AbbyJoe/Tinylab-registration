@@ -13,8 +13,14 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-           <li class="nav-item">
-            <button type="button"  @click="logOut" class="btn">Logout</button>
+           <li class="nav-item" v-if="auth">
+            <button type="button" @click="logOut" class="btn">Logout</button>
+          </li>
+          <li class="nav-item" v-if="!auth">
+            <button type="button" class="btn"><router-link to="/Register" class="btn">Register</router-link></button>
+          </li>
+          <li class="nav-item" v-if="!auth">
+            <button type="button" class="btn"><router-link to="/Login" class="btn" >Login</router-link></button>
           </li>
         </ul>
       </div>
@@ -24,10 +30,19 @@
 
 <script>
 export default {
+  data:()=>({
+
+  }),
   methods: {
     logOut() {
       localStorage.removeItem('token');
+      localStorage.removeItem('userId');
       this.$router.push('/Login')
+    }
+  },
+  computed:{
+    auth() {
+      return localStorage.getItem('token')
     }
   }
 
@@ -35,7 +50,7 @@ export default {
 </script>
 
 <style scoped>
-  .nav-link, .navbar-brand {
+  .btn{
       font-family: 'Roboto', sans-serif;
   }
 </style>

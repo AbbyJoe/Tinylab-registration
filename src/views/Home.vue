@@ -113,7 +113,7 @@ export default {
         this.$router.push('/Login')
     } else {
       this.getTopNews();
-      this.scrollTrigger()
+      this.scrollTrigger();
     }
   },
   filters: {
@@ -146,7 +146,7 @@ export default {
       outline: none;
       font-family: 'Roboto', sans-serif;
   }
-  h5, p {
+  h5, p , h4{
     font-family: 'Roboto', sans-serif;
   }
   .card__body {

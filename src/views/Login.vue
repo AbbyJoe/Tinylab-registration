@@ -1,11 +1,12 @@
 <template>
   <div class="home">
+    <Navbar/>
    <div class="global-container">
       <div class="card login-form">
       <div class="card-body">
         <h3 class="card-title text-center">Login to Newslify</h3>
         <div class="card-text">
-             <div v-if="error" class="bg-danger p-2">{{error}}</div>
+             <div v-if="error" class="bg-danger p-2 text-white">{{error}}</div>
           <form>
             <div class="form-group">
               <label for="exampleInputUsername1">Email</label>
@@ -23,7 +24,7 @@
               <div v-else>Login</div>
             </button>
             <div class="sign-up">
-              Don't have an account? <a href="#">Create One</a>
+              Don't have an account? <router-link to="/Register">Create One</router-link>
             </div>
           </form>
         </div>
@@ -35,28 +36,30 @@
 
 <script>
 // @ is an alias to /src
-// import Navbar from '@/components/Navbar.vue'
+import Navbar from '@/components/Navbar.vue'
 import axios from 'axios'
 export default {
   name: 'Home',
   components: {
-    // Navbar,
+    Navbar,
   },
   data:() => ({
     email: '',
     password:'',
     loading: false,
-    error: ''
+    error: '',
   }),
   methods: {
     login() {
-      this.loading = true
-      axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBtzpOWVgBehBQ-YEm-GhLiYVJ_NxvtplY', {
+      this.loading = true;
+      const api_key = `AIzaSyBtzpOWVgBehBQ-YEm-GhLiYVJ_NxvtplY`
+      axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${api_key}`, {
           email: this.email,
           password: this.password,
       }).then(response => {
         this.loading = false,
         localStorage.setItem('token', response.data.idToken),
+        localStorage.setItem('userId', response.data.localId)
         this.$router.push('/')
       }).catch(error => {
           this.loading = false;
