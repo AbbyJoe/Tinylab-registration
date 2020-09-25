@@ -66,7 +66,7 @@ export default {
     getTopNews() {
       this.loading = true
       const api_key = '886f03f701624f8a983ec136ff054946';
-      axios.get(`http://newsapi.org/v2/top-headlines?country=${this.country}&pageSize=${this.maxPerPage}&apiKey=${api_key}&page=${this.currentPage}`)
+      axios.get(`https://newsapi.org/v2/top-headlines?country=${this.country}&pageSize=${this.maxPerPage}&apiKey=${api_key}&page=${this.currentPage}`)
       .then(response => {
         this.loading = false
         this.articles.push(...response.data.articles)
